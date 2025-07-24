@@ -245,22 +245,57 @@
 
 
 <div class="quotes-container">
-  <div class="quote-box-parent">  
-     <div class="quote-box">
+  <div class="quote-box-parent" id="quoteSlider">
+    <div class="quote-box">
       <p>
-      <span>“Not just a bag—an heirloom investment in something <bR>lasting, personal, and timeless.”</span> 
-      </p> 
+        <span>“Not just a bag—an heirloom investment in something <br>lasting, personal, and timeless.”</span>
+      </p>
       <img src="img/pic2.PNG" alt="look" class="quote-img-left">
     </div>
     <div class="quote-box">
       <p>
         <span>“Bags that age like a fine wine - gaining more <br>character over time.”</span>
       </p>
-      <img src="img/pic3.PNG"alt="look" class="quote-img-right">
+      <img src="img/pic3.PNG" alt="look" class="quote-img-right">
     </div>
- 
   </div>
-  </div>
+
+  <!-- Dots navigation for mobile -->
+  <div class="slider-dots" id="sliderDots"></div>
+</div>
+<script>
+  const slider = document.getElementById('quoteSlider');
+  const dotsContainer = document.getElementById('sliderDots');
+  const slides = slider.children;
+  const totalSlides = slides.length;
+
+  // Only activate on mobile
+  if (window.innerWidth <= 768) {
+    // Create dots
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('span');
+      dot.addEventListener('click', () => {
+        slider.scrollTo({
+          left: i * slider.clientWidth,
+          behavior: 'smooth'
+        });
+      });
+      dotsContainer.appendChild(dot);
+    }
+
+    // Active dot update
+    function updateActiveDot() {
+      const index = Math.round(slider.scrollLeft / slider.clientWidth);
+      [...dotsContainer.children].forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    slider.addEventListener('scroll', updateActiveDot);
+    updateActiveDot();
+  }
+</script>
+
 <!-- best sellar section -->
   <div class="product-row">
     <div class="product-card">
@@ -355,7 +390,7 @@
 
   <div class="review-card" style="background-image: url('img/ra1.png');">
     <div class="overlay">
-      <div class="stars">★★★★★</div>
+      <div class="stars">★★★★</div>
       <div class="review-text">“Let me state this: After your demise, your children will fight over who gets this bag!”</div>
       <div class="review-location">
         <span>Hernando, US</span>
@@ -466,6 +501,35 @@
     
     
   </div>
+  <!--faqs-->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const faqItems = document.querySelectorAll('.faqs');
+
+  faqItems.forEach(item => {
+    const summary = item.querySelector('.faq-questions');
+
+    summary.addEventListener('click', function (e) {
+      e.preventDefault(); // Prevents default <details> toggle
+
+      // Close all other FAQ items
+      faqItems.forEach(other => {
+        if (other !== item) {
+          other.removeAttribute('open'); // Close other items
+        }
+      });
+
+      // Toggle current one
+      if (item.hasAttribute('open')) {
+        item.removeAttribute('open');
+      } else {
+        item.setAttribute('open', '');
+      }
+    });
+  });
+});
+</script>
+
 <!-- Footer -->
        <!-- FAQ Section -->
     <div class = "faq-container">
@@ -556,8 +620,8 @@
         </div>
         <div class = "sales section2">
             <h4>Shop</h4>
-            <ul>
-                <li><a href = "index.html">Best Seller</a></li>
+            <ul style="list-style: none;">
+                <li><a href = "#">Best Seller</a></li>
                 
                     <!-- Footer Work Bags Dropdown -->
                     <details class = "footer-drop-menu">
@@ -692,7 +756,7 @@
         </div>
         <div class = "company section2">
             <h4>Company</h4>
-            <ul>
+            <ul style="list-style: none;"">
                 <li>
                     <a href = "index.html">Our Story</a>
                 </li>
@@ -730,7 +794,7 @@
     <!-- Copyright and Legal Links -->
 <div class="footer__copyright">
     <p class="copyright__content">© 2025,</p>
-    <ul>
+    <ul >
         <li>
             <a class = "realleather" href="index.html">The Real Leather Co.</a>
         </li>
@@ -747,6 +811,7 @@
             <a href = "index.html">Shipping policy</a>
         </li>
   </ul>
+</div>
 </footer>
 <script>
   // Toggle mobile menu
